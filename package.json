@@ -20,8 +20,17 @@
   },
   "homepage": "https://github.com/Ian-Maynard/Newzcraper#readme",
   "dependencies": {
+    "bitlyapi": "^1.0.9",
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.3",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "goo.gl": "^0.1.4",
+    "logger": "0.0.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.7.7",
+    "morgan": "^1.9.1",
+    "node-bitlyapi": "^0.4.0",
+    "request": "^2.88.0"
   }
 }
