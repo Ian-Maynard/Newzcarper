@@ -33,5 +33,56 @@ var router = express.Router();
 
         }
 
+        app.get("/articles", function(req, res) {
+            Article.find({}, function(error, doc) {
+            // Log any errors
+            if (error) {
+              console.log(error);
+            }
+            // Or send the doc to the browser as a json object
+            else {
+              res.json(doc);
+            }
+          });
+        });
+        
+        // Grab an article by it's ObjectId
+        app.get("/articles/:id", function(req, res) {
+          Article.findOne({ "_id": req.params.id })
+          // ..and populate all of the notes associated with it
+          .populate("note")
+          // now, execute our query
+          .exec(function(error, doc) {
+            // Log any errors
+            if (error) {
+              console.log(error);
+            }
+            // Otherwise, send the doc to the browser as a json object
+            else {
+              res.json(doc);
+            }
+          });
+        });
+
+
+        app.post("/articles/:id", function(req, res) {
+          var newNote = new Note(req.body);
+        
+          newNote.save(function(error, doc) {
+            if (error) {
+              console.log(error);
+            }
+            else {
+              Article.findOneAndUpdate({ "_id": req.params.id }, { "note": doc._id }).exec(function(err, doc) {
+                if (err) {
+                  console.log(err);
+                }
+                else {
+                  res.send(doc);
+                }
+              });
+            }
+          });
+        });
 
 module.exports = router;
