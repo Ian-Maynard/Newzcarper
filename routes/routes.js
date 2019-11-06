@@ -2,38 +2,13 @@
 /* jshint esversion: 8 */ 
 
 const express = require("express");
-// var query = require("../controllers/controller")
 var cheerio = require("cheerio");
 var request = require("request");
 var Bitly = require('bitlyapi');
 var bitly = new Bitly('fd0a57a9269bf1d523ec4bd38c18f0812c444f04'); // Shorten URL
-var router = express.Router();
+var app = express.Router();
 
-        function scraper(sURL,cr1,cr2) {
-        var time = [];
-            request (sURL, function(error, response, html) { 
-                var $ = cheerio.load(html);
-        
-                 $(".rail-article-title").each(function(i, element)  {
-                    var link = $(this).children("a").attr("href");
-                    var title = $(this).children("a").text().trim(); // Scrape the title from the DOM
-                        bitly.shorten(link).then(function(response) { 
-                            link = response.data.url;
-                            console.log('Link is : '+link+"  Title: "+title);
-                            time.push({
-                                title: title,
-                            link: link
-                                });
-                        }, 
-                        function(error) {
-                        throw error;
-                        });
-                 });
-            });
-
-        }
-
-        app.get("/articles", function(req, res) {
+app.get("/articles", function(req, res) {
             Article.find({}, function(error, doc) {
             // Log any errors
             if (error) {
@@ -45,9 +20,9 @@ var router = express.Router();
             }
           });
         });
-        
+
         // Grab an article by it's ObjectId
-        app.get("/articles/:id", function(req, res) {
+  app.get("/articles/:id", function(req, res) {
           Article.findOne({ "_id": req.params.id })
           // ..and populate all of the notes associated with it
           .populate("note")
@@ -64,8 +39,7 @@ var router = express.Router();
           });
         });
 
-
-        app.post("/articles/:id", function(req, res) {
+app.post("/articles/:id", function(req, res) {
           var newNote = new Note(req.body);
         
           newNote.save(function(error, doc) {
@@ -83,6 +57,74 @@ var router = express.Router();
               });
             }
           });
-        });
+});
 
-module.exports = router;
+app.get("/scrape", function(req, res)   {
+
+          function skraper(srce,sURL,urlSwitch,skrapeParm) {
+            // urlSwitch (boolean) is for URL scrapes that require their base url as a prefix 
+            // skrapeParm the scrape search term 
+              console.log("\n***********************************\n" +
+                          "Scraping top stories from " +srce+"."+
+                          "\n***********************************\n");
+
+            request (sURL, function(error, response, html) { 
+      
+                      const $ = cheerio.load(html);
+
+                            $(skrapeParm).each(function(i, element) {
+      
+                                var link = $(this).children("a").attr("href");
+                                var title = $(this).children("a").text().trim(); 
+                                console.log(title+" - "+link);
+      
+                                // format the Title
+                                    title = title.replace(/\t|\n/g, "");  // strip out certain characters
+                                    if (urlSwitch) link = sURL + link; // If URL root is required.
+      
+                                    if (title.indexOf('(UPI) --') > -1 ) 
+                                              title = title.substring(title.indexOf('(UPI) --')+8,title.length);
+      
+                                    if (title.length > 65) 
+                                        title = title.substring(0,64); // format title if necessary
+                                        title = title.trim(); // Trim Title
+
+                                    // Create shareable URL
+      
+                                      if (sURL && title && link)
+                                                {
+                                                  var outPut = {};
+                                                  outPut.source = srce;
+                                                  outPut.title = title; 
+                                                  outPut.link = link;
+      
+                                                  var rekord = new Article(outPut);
+      
+                                                    rekord.save(function(err,doc)  { 
+                                                        console.log(outPut.srce+" + "+outPut.title);
+                                                      if (err){
+                                                        console.log(err);
+                                                              }
+                                                      else {
+                                                        console.log(doc);
+                                                            }
+                                                      }); //Write 
+      
+                                        } // Write if a complete record exists.
+                                       
+                                  }, function(error) {throw error;}
+                              );
+                                  // Scrape              
+                          }); // Request
+            } // skraper
+      
+              skraper("Reuters","http://www.reuters.com/",true,".article-heading");
+              skraper("UPI","http://www.upi.com/",false,".story");
+              skraper("Deutsche Welle","http://www.dw.com/",true,".news");
+              skraper("Bloomberg","https://www.bloomberg.com/",true,".top-news-v3-story-headline");
+              skraper("Time","http://www.time.com/",true,".rail-article-title");
+
+              res.send("Scrape Complete");
+      });
+
+module.exports = app;
