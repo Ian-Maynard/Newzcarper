@@ -5,6 +5,8 @@ const express = require("express");
 var cheerio = require("cheerio");
 var request = require("request");
 var Bitly = require('bitlyapi');
+var Note = require("../models/note.js");
+var Article = require("../models/Article.js");
 var bitly = new Bitly('fd0a57a9269bf1d523ec4bd38c18f0812c444f04'); // Shorten URL
 var app = express.Router();
 
@@ -19,10 +21,10 @@ app.get("/articles", function(req, res) {
               res.json(doc);
             }
           });
-        });
+});
 
         // Grab an article by it's ObjectId
-  app.get("/articles/:id", function(req, res) {
+app.get("/articles/:id", function(req, res) {
           Article.findOne({ "_id": req.params.id })
           // ..and populate all of the notes associated with it
           .populate("note")
@@ -37,7 +39,7 @@ app.get("/articles", function(req, res) {
               res.json(doc);
             }
           });
-        });
+});
 
 app.post("/articles/:id", function(req, res) {
           var newNote = new Note(req.body);
@@ -123,8 +125,7 @@ app.get("/scrape", function(req, res)   {
               skraper("Deutsche Welle","http://www.dw.com/",true,".news");
               skraper("Bloomberg","https://www.bloomberg.com/",true,".top-news-v3-story-headline");
               skraper("Time","http://www.time.com/",true,".rail-article-title");
-
               res.send("Scrape Complete");
-      });
+});
 
 module.exports = app;

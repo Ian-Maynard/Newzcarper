@@ -28,13 +28,13 @@ button:focus {
   font-weight: bold;
 }
 
-.jmbo{
+.jmbo {
    background-image: url("../images/hot2.png");
    background-size: cover;
    background-repeat: no-repeat;
 }
 
-.msthd{
+.msthd {
     display: block;
     margin-left: 30px;
     color: white;
@@ -48,5 +48,11 @@ button:focus {
   justify-content: space-between;
   border: 1px solid black;
   border-radius: 07px;
+  
   flex-wrap: wrap;
+}
+
+.cardHolder {
+  display: flex;
+
 }

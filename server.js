@@ -9,16 +9,16 @@ var mongoose = require("mongoose");
 var request = require("request");
 var cheerio = require("cheerio");
 var app = express(); // reference Express 
-// Var Step = require("step");
-// var gKey = googl.setKey('AIzaSyBXobGbNYWd9dc0PUQ8Qb27kOI6nQWXxPs');
-var Note = require("./models/Note.js");
-var Article = require("./models/Article.js");
+const routes = require('./routes/routes');
+
 const router = express.Router(); 
 
 mongoose.Promise = Promise; // configure mongoose for ES6 promises
 app.use(logger("dev"));
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public")); //Static Directory
+app.use('/', routes);
 
 // Mongoose config and init
 mongoose.connect("mongodb://localhost/scraperdata14", { useNewUrlParser: true, useUnifiedTopology: true } ); // Mongod connection
