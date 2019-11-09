@@ -6,12 +6,12 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
-var request = require("request");
-var cheerio = require("cheerio");
+// var request = require("request");
+// var cheerio = require("cheerio");
 var app = express(); // reference Express 
 const routes = require('./routes/routes');
 
-const router = express.Router(); 
+// const router = express.Router(); 
 
 mongoose.Promise = Promise; // configure mongoose for ES6 promises
 app.use(logger("dev"));

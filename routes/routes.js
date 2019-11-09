@@ -63,62 +63,65 @@ app.post("/articles/:id", function(req, res) {
 
 app.get("/scrape", function(req, res)   {
 
-          function skraper(srce,sURL,urlSwitch,skrapeParm) {
+      function skraper(srce,sURL,urlSwitch,skrapeParm) {
             // urlSwitch (boolean) is for URL scrapes that require their base url as a prefix 
-            // skrapeParm the scrape search term 
-              console.log("\n***********************************\n" +
-                          "Scraping top stories from " +srce+"."+
-                          "\n***********************************\n");
 
-            request (sURL, function(error, response, html) { 
-      
-                      const $ = cheerio.load(html);
+            request (sURL,
+
+                      function(error, response, html) { 
+                      
+                        const $ = cheerio.load(html); // Pull the DOM
+                        var linkNum=0;
 
                             $(skrapeParm).each(function(i, element) {
-      
-                                var link = $(this).children("a").attr("href");
-                                var title = $(this).children("a").text().trim(); 
-                                console.log(title+" - "+link);
-      
-                                // format the Title
-                                    title = title.replace(/\t|\n/g, "");  // strip out certain characters
-                                    if (urlSwitch) link = sURL + link; // If URL root is required.
-      
-                                    if (title.indexOf('(UPI) --') > -1 ) 
-                                              title = title.substring(title.indexOf('(UPI) --')+8,title.length);
-      
-                                    if (title.length > 65) 
-                                        title = title.substring(0,64); // format title if necessary
+
+                                    var link = $(this).children("a").attr("href");
+                                    var title = $(this).children("a").text().trim(); 
+                                    console.log(title+" - "+link);
+          
+                                        title = title.replace(/\t|\n/g,"");  // strip out certain characters
+
+                                        if (urlSwitch) link = sURL + link; // If URL root is required.
+          
+                                        if (title.indexOf('(UPI) --') > -1 ) 
+                                                  title = title.substring(title.indexOf('(UPI) --')+8,title.length);
+          
+                                        if (title.length > 65) 
+                                            title = title.substring(0,64); // format title if necessary
+
                                         title = title.trim(); // Trim Title
 
-                                    // Create shareable URL
-      
-                                      if (sURL && title && link)
-                                                {
-                                                  var outPut = {};
-                                                  outPut.source = srce;
-                                                  outPut.title = title; 
-                                                  outPut.link = link;
-      
-                                                  var rekord = new Article(outPut);
-      
-                                                    rekord.save(function(err,doc)  { 
-                                                        console.log(outPut.srce+" + "+outPut.title);
-                                                      if (err){
-                                                        console.log(err);
-                                                              }
-                                                      else {
-                                                        console.log(doc);
-                                                            }
-                                                      }); //Write 
-      
-                                        } // Write if a complete record exists.
-                                       
-                                  }, function(error) {throw error;}
+                                        // Create shareable URL
+          
+                                          if (sURL && title && link)
+                                            {
+                                                      var outPut = {};
+                                                      outPut.source = srce;
+                                                      outPut.title = title; 
+                                                      outPut.link = link;
+
+                                                      var rekord = new Article(outPut);
+          
+                                                      rekord.save(function(err,doc)  { 
+                                                          console.log(outPut.srce+" + "+outPut.title);
+                                                              if (err){
+                                                                    console.log(err);
+                                                                              }
+                                                                else {
+                                                                    console.log(doc);
+                                                                            }
+                                                          }); //Write 
+                                            } // Write if a complete record exists.
+                                      linkNum++;
+                                      if (linkNum === 3) return; 
+                                  },
+                                  function(error) {throw error;}
                               );
-                                  // Scrape              
-                          }); // Request
-            } // skraper
+                                  // Scrape        
+                            }
+
+                        }); // Request           
+            };// skraper
       
               skraper("Reuters","http://www.reuters.com/",true,".article-heading");
               skraper("UPI","http://www.upi.com/",false,".story");
