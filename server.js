@@ -6,7 +6,6 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
-var cheerio = require("cheerio");
 var app = express(); // reference Express 
 const routes = require('./routes/routes');
 const scrape = require('./routes/scrape');
@@ -18,7 +17,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public")); //Static Directory
 app.use('/', routes);
-app.use('/scrape', scrape);
+app.use('/scrape/', scrape);
 
 // Mongoose config and init
 mongoose.connect("mongodb://localhost/scraperdata14", { useNewUrlParser: true, useUnifiedTopology: true } ); // Mongod connection
