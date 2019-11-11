@@ -10,21 +10,22 @@ var Article = require("../models/Article.js");
 var bitly = new Bitly('fd0a57a9269bf1d523ec4bd38c18f0812c444f04'); // Shorten URL
 const router= express.Router(); 
 
-router.get("/scrape", function(req, res) {
+
+router.get("/scrape", async (req, res) => {
 
     function skraper(srce, sURL, urlSwitch, skrapeParm) {
               // urlSwitch (boolean) is for URL scrapes that require their base url as a prefix 
         var linkNum = 0; //Article counter
-        const linkTotal = 3;
+        const linkTotal = 2;
         var article = new Article();
         var articles = [];
 
-          request (sURL, function(error, response, html) { 
-              const $ = cheerio.load(html); // Pull the DOM
-                    $(skrapeParm).each(function(i, element) { // Pull all the instances of a parameter
+          request (sURL, async (error, response, html)  => { 
+              const $ =  cheerio.load(html); // Pull the DOM
+                    $(skrapeParm).each( await function(i, element) { // Pull all the instances of a parameter
                                         // Pull the link and the title
 
-                                        var link  = $(this).children("a").attr("href");
+                                        var link  =  $(this).children("a").attr("href");
                                         var title = $(this).children("a").text().trim(); 
                                             title = title.replace(/\t|\n/g,"");  // strip out certain characters
                                             title = title.trim(); // Trim Title
@@ -49,9 +50,8 @@ router.get("/scrape", function(req, res) {
                                           linkNum++;
                                             if (linkNum === linkTotal) {
                                               console.log(articles);
-                                              return;
+                                              return (articles);
                                           }
-
                                       },
 
                                       function(error) {throw error;}
@@ -60,12 +60,13 @@ router.get("/scrape", function(req, res) {
                             }); // Request        
               } // skraper
         
-                skraper("Reuters","http://www.reuters.com/",true,".article-heading");
-                skraper("UPI","http://www.upi.com/",false,".story");
-                skraper("Deutsche Welle","http://www.dw.com/",true,".news");
-                skraper("Bloomberg","https://www.bloomberg.com/",true,".top-news-v3-story-headline");
-                skraper("Time","http://www.time.com/",true,".rail-article-title");
-                res.send("Scrape Complete");
+                const reuters = await skraper("Reuters","http://www.reuters.com/",true,".article-heading");
+                res.send(reuters);
+                const upi = await skraper("UPI","http://www.upi.com/",false,".story");
+                const deutschWelle = await skraper("Deutsche Welle","http://www.dw.com/",true,".news");
+                const bloomberg = await skraper("Bloomberg","https://www.bloomberg.com/",true,".top-news-v3-story-headline");
+                const time = await skraper("Time","http://www.time.com/",true,".rail-article-title");
+                // res.render("../public/index.html",articles);
   });
   
 module.exports = router;
