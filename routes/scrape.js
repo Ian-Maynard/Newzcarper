@@ -13,28 +13,22 @@ const router= express.Router();
 
 router.get("/scrape",  (req, res) =>  {
 
-    function articleCreat(url, title, link) {
+    function articleCreat(srce, url, title, link, articles) {
 
       title = title.replace(/\t|\n/g, ""); // strip out certain characters
       title = title.trim(); // Trim Title
 
-          if (title.indexOf('(UPI) --') > -1)
-              title = title.substring(title.indexOf('(UPI) --') + 8, title.length);
-
-          if (title.length > 65)
-              title = title.substring(0, 64); // constrain length of title
-
+          if (title.length > 65) {
+            title = title.substring(0, 64); // constrain length of title
+          }
         // To create shareable URL - Implement bitly here. 
-
-          if (sURL && title && link) {
                   var article = new Article();
                       article.source = srce;
                       article.title = title;
                       article.link = link;
-                      return(article);
-                }
+        return(article);
+                
     }
-
 
     function skraper(srce, sURL, urlSwitch, skrapeParm) {
               // urlSwitch (boolean) is for URL scrapes that require their base url as a prefix 
@@ -45,27 +39,35 @@ router.get("/scrape",  (req, res) =>  {
 
               const $ =  cheerio.load(html); // Pull the DOM
 
-                    $(skrapeParm).each( function (i, element) {
-                        // Pull the link and the title
-                          var link = $(this).children("a").attr("href");
-                          var title = $(this).children("a").text().trim();
-                          if (urlSwitch) link = sURL + link; // If URL root is required.
-                          articleCreat(url, title, link);
-                       },
-                          function(error) 
-                              {throw error;}
+                    $(skrapeParm).each( 
+                            function (i, element) {
+                                     // Pull the link and the title
+                                        var link = $(this).children("a").attr("href");
+                                        var title = $(this).children("a").text().trim();
+                                        if (urlSwitch) {
+                                            link = sURL + link; 
+                                        }// If URL root is required.
+                                          articles.push (articleCreat(srce, sURL, title, link));
+                                    },
+                                        function(error) 
+                                        {throw error;}
                                   );
                                       // Scrape        
             }); // Request     
+            return(articles);
                            
   } // skraper
-        
+  
                 const reuters = skraper("Reuters", "http://www.reuters.com/", true, ".article-heading");
                 // const upi = skraper("UPI","http://www.upi.com/",false,".story");
                 // const deutschWelle = skraper("Deutsche Welle","http://www.dw.com/",true,".news");
                 // const bloomberg = skraper("Bloomberg","https://www.bloomberg.com/",true,".top-news-v3-story-headline");
                 // const time =  skraper("Time","http://www.time.com/",true,".rail-article-title");
                 // res.render("../public/index.html",articles);
+                
+console.log(reuters);
+      
+
   });
   
 module.exports = router;
