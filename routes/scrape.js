@@ -11,8 +11,6 @@ var bitly = new Bitly('fd0a57a9269bf1d523ec4bd38c18f0812c444f04'); // Shorten UR
 const router= express.Router(); 
 
 router.get("/scrape",  (req, res) =>  {
-
-  
   
                 const reuters =  skraper("Reuters", "http://www.reuters.com/", true, ".article-heading");
                 const upi = skraper("UPI","http://www.upi.com/",false,".story");
