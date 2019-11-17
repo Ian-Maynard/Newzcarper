@@ -11,7 +11,7 @@ const router = express.Router();
 // skraper("Reuters", "http://www.reuters.com/", true, ".article-heading");
 // wikiUrls.push($('big > a', html)[i].attribs.href);
 
-router.get("/pull",  (req, res) =>  {
+router.get("/pullr",  (req, res) =>  {
 
         function scrap (sURL) {
             rp(sURL,sParm)
@@ -30,7 +30,7 @@ router.get("/pull",  (req, res) =>  {
         }
 
  scrap("http://www.reuters.com/",".article-heading");
- 
+
  });
   
                 // const reuters = skraper("Reuters", "http://www.reuters.com/", true, ".article-heading");

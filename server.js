@@ -10,6 +10,7 @@ var mongoose = require("mongoose");
 var app = express(); // reference Express 
 const routes = require('./routes/routes');
 const scrape = require('./routes/scrape');
+const pull = require('./routes/pull');
 // const router = express.Router(); 
 
 app.set('view engine', 'html');

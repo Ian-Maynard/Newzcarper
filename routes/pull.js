@@ -11,26 +11,22 @@ const router = express.Router();
 // skraper("Reuters", "http://www.reuters.com/", true, ".article-heading");
 // wikiUrls.push($('big > a', html)[i].attribs.href);
 
-router.get("/pull",  (req, res) =>  {
+router.get("/pullr",  (req, res) =>  {
 
-        function scrap (sURL) {
-            rp(sURL,sParm)
+async function scrap (sURL,sParm) {
+            await rp(sURL,sParm)
                     .then(function(html){
                         //success!
-                        for (let i = 0; i < 3; i++) {
-                            var link = $(this).children("a").attr("href");
-                            var title = $(this).children("a").text().trim();
-                            console.log(link+" = "+title);
-                        }
-                        console.log(sURL);
-                    })
+                            var link = $(sParm, html).attribs.href;
+                            console.log(link);
+                        })
                     .catch(function(err){
                         //handle error
                     });
         }
 
  scrap("http://www.reuters.com/",".article-heading");
- 
+
  });
   
                 // const reuters = skraper("Reuters", "http://www.reuters.com/", true, ".article-heading");
