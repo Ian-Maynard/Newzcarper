@@ -12,8 +12,10 @@ var bitly = new Bitly('fd0a57a9269bf1d523ec4bd38c18f0812c444f04'); // Shorten UR
 const router= express.Router(); 
 
 router.get("/scrape",  (req, res) =>  {
-    const reuters =  urlScraper("Reuters", "http://www.reuters.com/", true, ".article-heading");
-    const upi = urlScraper("UPI","http://www.upi.com/",false,".story");
+  var art = [];
+
+            art = urlScraper("Reuters", "http://www.reuters.com/", true, ".article-heading");
+    // const upi = urlScraper("UPI","http://www.upi.com/",false,".story");
                 // const deutschWelle = urlScraper("Deutsche Welle","http://www.dw.com/",true,".news");
                 // const bloomberg = urlScraper("Bloomberg","https://www.bloomberg.com/",true,".top-news-v3-story-headline");
                 // const time =  urlScraper("Time","http://www.time.com/",true,".rail-article-title");
