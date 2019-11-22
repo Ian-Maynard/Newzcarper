@@ -35,7 +35,7 @@ function urlScraper(srce, sURL, urlSwitch, skrapeParm) {
 
                                 article = articleCreate(srce, title, link, urlSwitch, article);
 
-                                num++;
+                                num++; 
 
                              if (num > 2) return(false);
                                   },
