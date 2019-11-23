@@ -33,7 +33,7 @@ function urlScraper(srce, sURL, urlSwitch, skrapeParm) {
                                 note:""
                               };
 
-                                article = articleCreate(srce, title, link, urlSwitch, article);
+                                art = articleCreate(srce, title, link, urlSwitch, article);
 
                                 num++; 
 
@@ -46,7 +46,7 @@ function urlScraper(srce, sURL, urlSwitch, skrapeParm) {
                                   // Scrape        
                               }); // Request   
 
-                      return(article);
+                      return(art);
 } // skraper
 
 module.exports= urlScraper; 
