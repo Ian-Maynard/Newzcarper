@@ -20,14 +20,14 @@ function articleCreate(srce, title, link, sURL, urlSwitch) {
                     link = sURL + link; 
                }
           // If URL root is required.
+          
+          ///
           // To create shareable URL - Implement URL shortener bitly here. 
           
           var article = {};
           article.source = srce;
           article.title = title;
           article.link = link;
-
-          console.log("Article Created as   "+article.link+" *** "+article.title);
           return(article);
 }
 

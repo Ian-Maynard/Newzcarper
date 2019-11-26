@@ -14,7 +14,7 @@ const router= express.Router();
 router.get("/scrape",  (req, res) =>  {
 
            const  reuters = urlScraper("Reuters", "http://www.reuters.com/", true, ".article-heading");
-           res.render("../public/index.html",reuters);
+          //  res.render("../public/index.html",reuters);
           //  const upi = urlScraper("UPI","http://www.upi.com/",false,".story");
           //  const deutschWelle = urlScraper("Deutsche Welle","http://www.dw.com/",true,".news");
           //  const bloomberg = urlScraper("Bloomberg","https://www.bloomberg.com/",true,".top-news-v3-story-headline");

@@ -28,12 +28,12 @@ function urlScraper(srce, sURL, urlSwitch, skrapeParm) {
                             // Pull the links and the titles
                                 var link = $(this).children("a").attr("href");
                                 var title = $(this).children("a").text().trim();
-                                console.log("Article scraped as   "+link+" *** "+title);
+                                console.log("Article "+num+" scraped as "+link+" *** "+title);
 
                                 art.push = articleCreate(srce, title, link, sURL, urlSwitch);
                                 num++;    
 
-                                if (num > 2) return(false);
+                                if (num > 3) return(false);
 
                                   },
 
