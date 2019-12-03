@@ -4,10 +4,9 @@
 var Article = require("../models/Article.js");    
 var TinyURL = require('tinyurl');
 
-async function  articleCreate(srce, title, link, sURL, urlSwitch) {
+async function articleCreate(srce, title, link, sURL, urlSwitch) {
 // Input: Current title and link for article, and null article
 // Output: a formatted article 
-
           title = title.replace(/\t|\n/g, ""); // strip out certain characters
           title = title.trim(); // Trim Title
 
@@ -22,11 +21,18 @@ async function  articleCreate(srce, title, link, sURL, urlSwitch) {
           
      var article = {};
 
-     TinyURL.shorten(link).then( function(res) {
-         let link= await (res);
-          }, function(err) {
-               console.log(err);
-           });          
+await TinyURL.shorten(link, function(res, err) {
+          link = res;
+          if (err)
+              console.log(err);
+      });
+
+           console.log("link is: ",link);
+           article.link = link;
+           article.source = srce;
+           article.title = title; 
+           return(article);
+
 }
 
 module.exports = articleCreate;
