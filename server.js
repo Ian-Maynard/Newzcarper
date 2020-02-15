@@ -11,7 +11,7 @@ var app = express(); // reference Express
 const routes = require('./routes/routes');
 const scrape = require('./routes/scrape');
 const pull = require('./routes/pull');
-// const router = express.Router(); 
+const router = express.Router(); 
 
 app.set('view engine', 'html');
 mongoose.Promise = Promise; // configure mongoose for ES6 promises
@@ -30,7 +30,7 @@ mongoose.connect("mongodb://localhost/scraperdata14", { useNewUrlParser: true, u
 var db = mongoose.connection;
 db.on("error", function(error) {
   console.log("Mongoose Error: ", error);
-}); 
+});     
 db.once("open", function() {
   console.log("Mongoose connection successful.");
 });
