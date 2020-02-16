@@ -1,8 +1,7 @@
-
 var mongoose = require("mongoose"); // Require mongoose
 var Schema = mongoose.Schema; // Create Schema class
 
-// Source schema
+// Source schema - stores information on sources. Name URL and Note
 var SourceSchema = new Schema({
   name: {
     type: String,
@@ -14,14 +13,14 @@ var SourceSchema = new Schema({
     required: true
   },
 
-  url: {
+  prefix: {
     type: String,
     required: true
   },
 
   genre: {
     type: String,
-    required: true
+    required: false
   },
 
   note: {
@@ -33,4 +32,4 @@ var SourceSchema = new Schema({
 });
 
 var Source = mongoose.model("Source", SourceSchema);
-module.exports = Source;
+module.exports = Source;  // stores sources.
