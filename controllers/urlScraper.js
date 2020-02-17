@@ -8,11 +8,14 @@ const Bitly = require('bitlyapi');
 var bitly = new Bitly('fd0a57a9269bf1d523ec4bd38c18f0812c444f04'); // Shorten URL
 
 function urlScraper(srce, sURL, urlSwitch, skrapeParm) {
+
   // urlSwitch (boolean) is for URL scrapes that require their base url as a prefix 
   // srce = name of the website
   // sURL = source of the URL
   // urlSwitch = the string to search for 
   // skrapeparm = the parm being looked for.
+
+  var artNum = 0;
 
     function titleFix(tie) {
         tie = tie.replace(/\t|\n/g,""); // strip out certain characters
@@ -47,8 +50,8 @@ async function comBine(ti, li) {
         try {
                 var outPut = {};
                 outPut.title = titleFix(ti);
-                outPut.link = await bitLink(li);
-                outPut.link = outPut.link.data.url;
+                var sLink = await bitLink(li);
+                outPut.link = sLink.data.url;
                 writeArt(outPut);
             }
         catch (err) {
@@ -56,11 +59,18 @@ async function comBine(ti, li) {
             }
 } //comBine
 
-request (sURL,  (error, response, html)  => {
+request (sURL,  (error, response, html)  =>
+         {
 
         const $ = cheerio.load(html); // Load html into Cheerio 
-                $(skrapeParm).each(function (i, element) {
+                $(skrapeParm).each(function (i, element)  {
+                    
+                 if (artNum < 5)   {
                  comBine($(this).children("a").text().trim(), $(this).children("a").attr("href"));
+                 artNum++;
+                 console.log(artNum);
+                 }
+                 
                 },
                 function(error) {
                     throw error;
@@ -72,3 +82,7 @@ request (sURL,  (error, response, html)  => {
 } // skraper
 
 module.exports = urlScraper;
+
+function newFunction() {
+    return 0;
+}
