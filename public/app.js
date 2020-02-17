@@ -10,26 +10,22 @@ $.getJSON("/articles", function(data) {
     for (var i = 0; i < data.length; i++) {
               //Format
               switch(data[i].title.substring(0,3))
-                    {
-                        case "Bloomberg":
-                              arformat="<div class='bloom'>";
-                              break;
-  
-                        case "Deutche Welle":
-                              arformat="<div class='dw'>";
-                              break;
-                              
+                    {       
                         case "REU":
                               arformat="<div class='reu'>";
-                              break;
-  
-                        case "Time":
-                              arformat="<div class='timemag'>";
                               break;
   
                         case "UPI":
                               arformat="<div class='upi'>";
                               break;
+
+                        // case "Bloomberg":
+                        //       arformat="<div class='bloom'>";
+                        //       break;
+  
+                        // case "Time":
+                        //         arformat="<div class='tim'>";
+                        //         break;
 
                         default:
                               arformat="<div class='cards'>";
