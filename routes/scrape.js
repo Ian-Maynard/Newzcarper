@@ -11,12 +11,11 @@ const router = express.Router();
 
 router.get("/scrape",  (req, res) =>  {
   //  The source options are hard coded here but in the future they will read from a sources file..
-        const reu = urlScraper("REU", "https://www.reuters.com", true, ".article-heading");
-        const upi = urlScraper("UPI","http://www.upi.com/",false,".story");
-        // const dWe = urlScraper("DW","http://www.dw.com/",true,".news");
+        const rEu = urlScraper("REU", "https://www.reuters.com", true, ".article-heading");
+        const uPi = urlScraper("UPI","http://www.upi.com/",false,".story");
+        const dWe = urlScraper("DWE","http://www.dw.com/",true,".news");
+        const sKr = urlScraper("BLM","https://www.bloomberg.com/",true,".top-news-v3-story-headline");
+        const tMr = urlScraper("TME","http://www.time.com/",true,".rail-article-title");
   });
-
-
-  // 
   
 module.exports = router;

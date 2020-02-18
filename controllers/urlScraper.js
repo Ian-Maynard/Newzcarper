@@ -61,7 +61,6 @@ async function comBine(ti, li) {
 
 request (sURL,  (error, response, html)  =>
          {
-
         const $ = cheerio.load(html); // Load html into Cheerio 
                 $(skrapeParm).each(function (i, element)  {
                     

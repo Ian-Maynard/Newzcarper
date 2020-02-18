@@ -19,13 +19,17 @@ $.getJSON("/articles", function(data) {
                               arformat="<div class='upi'>";
                               break;
 
-                        // case "Bloomberg":
-                        //       arformat="<div class='bloom'>";
-                        //       break;
+                        case "BLM":
+                              arformat="<div class='blm'>";
+                              break;
   
-                        // case "Time":
-                        //         arformat="<div class='tim'>";
-                        //         break;
+                        case "TME":
+                                arformat="<div class='tme'>";
+                                break;
+
+                        case "DWE":
+                                  arformat="<div class='dwe'>";
+                                  break;
 
                         default:
                               arformat="<div class='cards'>";
