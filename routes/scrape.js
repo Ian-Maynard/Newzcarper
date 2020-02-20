@@ -16,6 +16,7 @@ router.get("/scrape",  (req, res) =>  {
         const dWe = urlScraper("DWE","http://www.dw.com/",true,".news");
         const sKr = urlScraper("BLM","https://www.bloomberg.com/",true,".top-news-v3-story-headline");
         const tMr = urlScraper("TME","http://www.time.com/",true,".rail-article-title");
+        const bBc = urlScraper("BBC","http://bbc.com/",true, ".gs-c-promo-heading__title");
   });
   
 module.exports = router;

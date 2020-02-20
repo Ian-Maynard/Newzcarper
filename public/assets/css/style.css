@@ -107,6 +107,19 @@ button:focus {
   flex-wrap: wrap;
 }
 
+.bbc {
+  display: flex;
+  width: 200px;
+  margin: 10px;
+  padding: 10px;
+  background-color: crimson;
+  color: whitesmoke;
+  border: 1px solid black;
+  border-radius: 07px;
+  flex-wrap: wrap;
+}
+
+
 .dwe {
   display: flex;
   width: 200px;

@@ -64,11 +64,18 @@ request (sURL,  (error, response, html)  =>
         const $ = cheerio.load(html); // Load html into Cheerio 
                 $(skrapeParm).each(function (i, element)  {
                     
-                 if (artNum < 5)   {
-                 comBine($(this).children("a").text().trim(), $(this).children("a").attr("href"));
-                 artNum++;
-                 console.log(artNum);
-                 }
+                //  if (artNum < 5)   {
+                //  comBine($(this).children("a").text().trim(), $(this).children("a").attr("href"));
+                //  artNum++;
+                //  console.log(artNum);
+                //  }
+                comBine($(this).children("a").text().trim(), $(this).children("a").attr("href"));
+                artNum++;
+                console.log(artNum);
+
+                 if (artNum > 2)   {
+                     return false;
+                    }                 
                  
                 },
                 function(error) {
