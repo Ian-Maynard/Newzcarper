@@ -61,9 +61,9 @@ button:focus {
 
 .upi {
   display: flex;
-  width: 200px;
+  width: 280px;
   margin: 10px;
-  padding: 10px;
+  padding: 3px;
   background-color: aqua;
   color: blue;
   border: 1px solid black;
@@ -73,58 +73,20 @@ button:focus {
 
 .reu {
   display: flex;
-  width: 200px;
+  width: 280px;
   margin: 10px;
-  padding: 10px;
+  padding: 3px;
   background-color: blue;
   color: white;
   border: 1px solid black;
   border-radius: 07px;
   flex-wrap: wrap;
 }
-
-.blm {
-  display: flex;
-  width: 200px;
-  margin: 10px;
-  padding: 10px;
-  background-color: yellow;
-  color: darkorange;
-  border: 1px solid black;
-  border-radius: 07px;
-  flex-wrap: wrap;
-}
-
-.tme {
-  display: flex;
-  width: 200px;
-  margin: 10px;
-  padding: 10px;
-  background-color: coral;
-  color: chocolate;
-  border: 1px solid black;
-  border-radius: 07px;
-  flex-wrap: wrap;
-}
-
-.bbc {
-  display: flex;
-  width: 200px;
-  margin: 10px;
-  padding: 10px;
-  background-color: crimson;
-  color: whitesmoke;
-  border: 1px solid black;
-  border-radius: 07px;
-  flex-wrap: wrap;
-}
-
-
 .dwe {
   display: flex;
-  width: 200px;
+  width: 280px;
   margin: 10px;
-  padding: 10px;
+  padding: 3px;
   background-color: yellow;
   color: red;
   border: 1px solid black;

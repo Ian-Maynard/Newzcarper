@@ -15,7 +15,7 @@ function urlScraper(srce, sURL, urlSwitch, skrapeParm) {
   // urlSwitch = the string to search for 
   // skrapeparm = the parm being looked for.
 
-  var artNum = 0;
+  var artNum = 0; // Number of Articles
 
     function titleFix(tie) {
         tie = tie.replace(/\t|\n/g,""); // strip out certain characters
@@ -24,6 +24,7 @@ function urlScraper(srce, sURL, urlSwitch, skrapeParm) {
     } // titleFix
 
     function bitLink(l) {
+        console.log(" Link is: "+l);
         return new Promise((resolve, reject) => {
             if (urlSwitch) {
                 l=sURL+l;
@@ -35,8 +36,8 @@ function urlScraper(srce, sURL, urlSwitch, skrapeParm) {
 
 
 function writeArt(art) {
-    const rekord = new Article(art);
-    rekord.save(function(err, doc)  { 
+    const reKord = new Article(art);
+    reKord.save(function(err, doc)  { 
          if (err){
            console.log(err);
             }
@@ -63,12 +64,7 @@ request (sURL,  (error, response, html)  =>
          {
         const $ = cheerio.load(html); // Load html into Cheerio 
                 $(skrapeParm).each(function (i, element)  {
-                    
-                //  if (artNum < 5)   {
-                //  comBine($(this).children("a").text().trim(), $(this).children("a").attr("href"));
-                //  artNum++;
-                //  console.log(artNum);
-                //  }
+                
                 comBine($(this).children("a").text().trim(), $(this).children("a").attr("href"));
                 artNum++;
                 console.log(artNum);
@@ -76,14 +72,12 @@ request (sURL,  (error, response, html)  =>
                  if (artNum > 2)   {
                      return false;
                     }                 
-                 
                 },
                 function(error) {
                     throw error;
                     }
                 );
 }); // Request   
-
 
 } // skraper
 

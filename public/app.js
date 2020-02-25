@@ -19,14 +19,6 @@ $.getJSON("/articles", function(data) {
                               arformat="<div class='upi'>";
                               break;
 
-                        case "BLM":
-                              arformat="<div class='blm'>";
-                              break;
-  
-                        case "TME":
-                                arformat="<div class='tme'>";
-                                break;
-
                         case "DWE":
                                   arformat="<div class='dwe'>";
                                   break;
@@ -40,7 +32,9 @@ $.getJSON("/articles", function(data) {
       $("#cardHolder").
       append(arformat+"<p data-id='" + data[i]._id+"'>" 
       + data[i].title + "<br>" 
-      + data[i].link + "</p> </div>");
+      + "<a href='"
+      + data[i].link+"'>"
+      + data[i].link + "</a></p> </div>");
     }
   });
               
