@@ -17,7 +17,7 @@ button:focus {
 #fieldOne {
   display: inline-block;
   position: relative;
-  margin: 30px 30px 75px 30px;
+  margin: 30px 30px 35px 30px;
   width: 25%; 
   padding-left: 10px;
   border-radius: 10%;
@@ -54,7 +54,7 @@ button:focus {
     display: block;
     margin-left: 30px;
     color: white;
-    font-size: 45px;
+    font-size: 35px;
     font-weight: bold;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
